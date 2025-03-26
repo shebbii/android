@@ -1,0 +1,63 @@
+package com.example.datetimeram;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity {
+    Button btnDate, btnTime;
+    TextView txtDate, txtTime;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        btnDate = findViewById(R.id.btnDate);
+        btnTime = findViewById(R.id.btnTime);
+        txtDate = findViewById(R.id.txtDate);
+        txtTime = findViewById(R.id.txtTime);
+
+//        Date Picker Button Click
+        btnDate.setOnClickListener(view -> showDatePicker());
+
+//        Time Picker Button Click
+        btnTime.setOnClickListener(view -> showTimePicker());
+    }
+
+    private void showDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, month1, dayOfMonth) -> {
+            int actualMonth = month1 + 1;
+            String selectedDate = dayOfMonth+"/"+(actualMonth)+"/"+year1;
+            txtDate.setText("Selected Date"+selectedDate);
+            Toast.makeText(this,"Selected Date: "+selectedDate, Toast.LENGTH_SHORT).show();
+        }, year, month, day);
+        datePickerDialog.show();
+    }
+
+    private void showTimePicker() {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, minute1) -> {
+            String selectedTime = hourOfDay + ":" + minute1;
+            txtTime.setText("Selected Time: " + selectedTime);
+            Toast.makeText(this, "Time Selected: " + selectedTime, Toast.LENGTH_SHORT).show();
+        }, hour, minute, true);
+
+        timePickerDialog.show();
+    }
+}
