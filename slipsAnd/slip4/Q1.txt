@@ -1,0 +1,149 @@
+//MainActivity.java
+
+package com.example.calculatorapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText num1, num2;
+    TextView result;
+    Button add, subtract, multiply, divide;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize UI Elements
+        num1 = findViewById(R.id.et_num1);
+        num2 = findViewById(R.id.et_num2);
+        result = findViewById(R.id.tv_result);
+
+        add = findViewById(R.id.btn_add);
+        subtract = findViewById(R.id.btn_subtract);
+        multiply = findViewById(R.id.btn_multiply);
+        divide = findViewById(R.id.btn_divide);
+
+        // Set Click Listeners for Buttons
+        add.setOnClickListener(v -> performOperation('+'));
+        subtract.setOnClickListener(v -> performOperation('-'));
+        multiply.setOnClickListener(v -> performOperation('*'));
+        divide.setOnClickListener(v -> performOperation('/'));
+    }
+
+    // Function to Perform Arithmetic Operation
+    private void performOperation(char operator) {
+        String s1 = num1.getText().toString();
+        String s2 = num2.getText().toString();
+
+        if (s1.isEmpty() || s2.isEmpty()) {
+            result.setText("Enter both numbers");
+            return;
+        }
+
+        double n1 = Double.parseDouble(s1);
+        double n2 = Double.parseDouble(s2);
+        double res = 0;
+
+        switch (operator) {
+            case '+': res = n1 + n2; break;
+            case '-': res = n1 - n2; break;
+            case '*': res = n1 * n2; break;
+            case '/': res = (n2 != 0) ? (n1 / n2) : 0; break;
+        }
+
+        result.setText("Result: " + res);
+    }
+}
+
+//main_activity.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/et_num1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter first number"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/et_num2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter second number"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/et_num1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Result:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/et_num2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_result"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_subtract" />
+
+    <Button
+        android:id="@+id/btn_subtract"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_result"
+        app:layout_constraintStart_toEndOf="@id/btn_add"
+        app:layout_constraintEnd_toStartOf="@id/btn_multiply" />
+
+    <Button
+        android:id="@+id/btn_multiply"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="×"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_result"
+        app:layout_constraintStart_toEndOf="@id/btn_subtract"
+        app:layout_constraintEnd_toStartOf="@id/btn_divide" />
+
+    <Button
+        android:id="@+id/btn_divide"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="÷"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_result"
+        app:layout_constraintStart_toEndOf="@id/btn_multiply"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

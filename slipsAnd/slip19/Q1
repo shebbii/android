@@ -1,0 +1,62 @@
+//xml file
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- ImageView to show Bulb -->
+    <ImageView
+        android:id="@+id/bulbImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/bulb_off" />
+
+    <!-- Toggle Button to switch Bulb ON/OFF -->
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="BULB ON"
+        android:textOff="BULB OFF"
+        android:checked="false"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+
+//java file
+package com.example.bulbtoggle;
+
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.ToggleButton;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ToggleButton toggleButton;
+    private ImageView bulbImage;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize Views
+        toggleButton = findViewById(R.id.toggleButton);
+        bulbImage = findViewById(R.id.bulbImage);
+
+        // Toggle Button Listener
+        toggleButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Bulb ON
+                bulbImage.setImageResource(R.drawable.bulb_on);
+            } else {
+                // Bulb OFF
+                bulbImage.setImageResource(R.drawable.bulb_off);
+            }
+        });
+    }
+}
+

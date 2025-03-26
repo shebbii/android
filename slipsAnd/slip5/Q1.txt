@@ -1,0 +1,152 @@
+//MainActivity.java
+
+package com.example.simplecalc;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    EditText etNum1, etNum2;
+    Button btnCalculate;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        etNum1 = findViewById(R.id.etNum1);
+        etNum2 = findViewById(R.id.etNum2);
+        btnCalculate = findViewById(R.id.btnCalculate);
+
+        btnCalculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int num1 = Integer.parseInt(etNum1.getText().toString());
+                int num2 = Integer.parseInt(etNum2.getText().toString());
+
+                double power = Math.pow(num1, num2);
+                double average = (num1 + num2) / 2.0;
+
+                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                intent.putExtra("POWER", power);
+                intent.putExtra("AVERAGE", average);
+                startActivity(intent);
+            }
+        });
+    }
+}
+
+
+//acyivity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/etNum1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Number 1"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/etNum2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Number 2"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/btnCalculate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calculate" />
+
+</LinearLayout>
+
+//ResultActivity.java
+
+package com.example.simplecalc;
+
+import android.os.Bundle;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class ResultActivity extends AppCompatActivity {
+    TextView tvResult;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_result);
+
+        tvResult = findViewById(R.id.tvResult);
+
+        double power = getIntent().getDoubleExtra("POWER", 0);
+        double average = getIntent().getDoubleExtra("AVERAGE", 0);
+
+        tvResult.setText("Power: " + power + "\nAverage: " + average);
+    }
+}
+
+//activity_result.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Results will be shown here" />
+
+</LinearLayout>
+
+//manifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Simplecalc"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".ResultActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>
+

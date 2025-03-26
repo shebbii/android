@@ -1,0 +1,139 @@
+//java file
+package com.example.slip11_1;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView textView;
+    private float fontSize = 24f;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize UI elements
+        textView = findViewById(R.id.textView);
+        Button btnIncrease = findViewById(R.id.btnIncrease);
+        Button btnDecrease = findViewById(R.id.btnDecrease);
+        Button btnRed = findViewById(R.id.btnRed);
+        Button btnBlue = findViewById(R.id.btnBlue);
+        Button btnGreen = findViewById(R.id.btnGreen);
+        Spinner fontSpinner = findViewById(R.id.fontSpinner);
+
+        // Font Family Options
+        String[] fonts = {"Sans", "Serif", "Monospace"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, fonts);
+        fontSpinner.setAdapter(adapter);
+
+        // Increase Font Size
+        btnIncrease.setOnClickListener(v -> {
+            fontSize += 2;
+            textView.setTextSize(fontSize);
+        });
+
+        // Decrease Font Size
+        btnDecrease.setOnClickListener(v -> {
+            if (fontSize > 12) {
+                fontSize -= 2;
+                textView.setTextSize(fontSize);
+            }
+        });
+
+        // Change Font Color
+        btnRed.setOnClickListener(v -> textView.setTextColor(Color.RED));
+        btnBlue.setOnClickListener(v -> textView.setTextColor(Color.BLUE));
+        btnGreen.setOnClickListener(v -> textView.setTextColor(Color.GREEN));
+
+        // Change Font Family
+        fontSpinner.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
+                String selectedFont = fonts[position];
+                switch (selectedFont) {
+                    case "Sans":
+                        textView.setTypeface(android.graphics.Typeface.SANS_SERIF);
+                        break;
+                    case "Serif":
+                        textView.setTypeface(android.graphics.Typeface.SERIF);
+                        break;
+                    case "Monospace":
+                        textView.setTypeface(android.graphics.Typeface.MONOSPACE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(android.widget.AdapterView<?> parent) { }
+        });
+    }
+}
+
+//xml file
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <!-- TextView to display the string -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello, Android!"
+        android:textSize="24sp"
+        android:textColor="#000000"
+        android:typeface="sans"
+        android:padding="20dp"/>
+
+    <!-- Buttons to Change Font Size -->
+    <Button
+        android:id="@+id/btnIncrease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Increase Font Size"/>
+
+    <Button
+        android:id="@+id/btnDecrease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Decrease Font Size"/>
+
+    <!-- Buttons to Change Font Color -->
+    <Button
+        android:id="@+id/btnRed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Red"/>
+
+    <Button
+        android:id="@+id/btnBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blue"/>
+
+    <Button
+        android:id="@+id/btnGreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Green"/>
+
+    <!-- Spinner to Select Font Family -->
+    <Spinner
+        android:id="@+id/fontSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
+

@@ -1,0 +1,81 @@
+//xml file
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Button
+        android:id="@+id/showDialogButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Alert Dialog" />
+</LinearLayout>
+
+//java file
+package com.example.alertdialogdemo;
+
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button showDialogButton = findViewById(R.id.showDialogButton);
+
+        showDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog();
+            }
+        });
+    }
+
+    private void showAlertDialog() {
+        // Create an AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation");
+        builder.setMessage("Are you sure you want to proceed?");
+        
+        // Add Positive Button (Yes)
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this, "You clicked YES", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Add Negative Button (No)
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this, "You clicked NO", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        // Add Neutral Button (Cancel)
+        builder.setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this, "Dialog Cancelled", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+}
+

@@ -1,0 +1,101 @@
+//MainActivity.java
+package com.example.slip9_1;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText edtNum1, edtNum2;
+    private Button btnSubmit;
+    private TextView txtResult;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize UI components
+        edtNum1 = findViewById(R.id.edtNum1);
+        edtNum2 = findViewById(R.id.edtNum2);
+        btnSubmit = findViewById(R.id.btnSubmit);
+        txtResult = findViewById(R.id.txtResult);
+
+        // Button Click Listener
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAndDisplay();
+            }
+        });
+    }
+
+    private void validateAndDisplay() {
+        String num1Str = edtNum1.getText().toString().trim();
+        String num2Str = edtNum2.getText().toString().trim();
+
+        if (num1Str.isEmpty() || num2Str.isEmpty()) {
+            Toast.makeText(this, "Please enter both numbers!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int num1 = Integer.parseInt(num1Str);
+        int num2 = Integer.parseInt(num2Str);
+
+        if (num1 > 10 && num2 > 10) {
+            Toast.makeText(this, "Both numbers are greater than 10. Enter new values!", Toast.LENGTH_LONG).show();
+            edtNum1.setText("");
+            edtNum2.setText("");
+        } else {
+            txtResult.setText("Entered Numbers: " + num1 + " & " + num2);
+        }
+    }
+}
+
+//activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/edtNum1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter first number"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/edtNum2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter second number"
+        android:inputType="number"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/txtResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+

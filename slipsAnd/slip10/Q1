@@ -1,0 +1,84 @@
+//MainActivity.java
+package com.example.slip10_1;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.ToggleButton;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Switch mySwitch;
+    private ToggleButton myToggleButton;
+    private TextView statusText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Initialize UI elements
+        mySwitch = findViewById(R.id.mySwitch);
+        myToggleButton = findViewById(R.id.myToggleButton);
+        statusText = findViewById(R.id.statusText);
+
+        // Switch Listener
+        mySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                statusText.setText("Switch is ON");
+            } else {
+                statusText.setText("Switch is OFF");
+            }
+        });
+
+        // Toggle Button Listener
+        myToggleButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                statusText.setText("Toggle ON");
+                statusText.setBackgroundColor(Color.GREEN);
+            } else {
+                statusText.setText("Toggle OFF");
+                statusText.setBackgroundColor(Color.RED);
+            }
+        });
+    }
+}
+
+//activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <!-- Switch -->
+    <Switch
+        android:id="@+id/mySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable Feature" />
+
+    <!-- Toggle Button -->
+    <ToggleButton
+        android:id="@+id/myToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="Turn OFF"
+        android:textOn="Turn ON" />
+
+    <!-- TextView for Status -->
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status: OFF"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
